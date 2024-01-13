@@ -4,7 +4,7 @@ import useTokenExpiredModal from "@/store/useTokenExpiredModal";
 
 const TokenExpireModal = () => {
   // tokenExpired가 true이면
-  const tokenExpired = useTokenExpiredModal((state) => !state.tokenModalState);
+  const tokenExpired = useTokenExpiredModal((state) => state.tokenModalState);
 
   const handleModal = () => {
     useTokenExpiredModal();
