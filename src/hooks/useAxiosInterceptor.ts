@@ -1,11 +1,11 @@
 import axios, { AxiosError } from "axios";
-import { useSetRecoilState } from "recoil";
 import { privateInstance, publicInstance } from "@/apis/instance";
 import { AUTH_TOKEN_KEY } from "@/constants/api";
-import tokenExpireModalState from "@/recoil/atoms/tokenExpireModalState";
+import useTokenExpiredModal from "@/store/useTokenExpiredModal";
 
 const useAxiosInterceptor = () => {
-  const setIsTokenExpireModalOpen = useSetRecoilState(tokenExpireModalState);
+  // const setIsTokenExpireModalOpen = useSetRecoilState(tokenExpireModalState);
+  const changeTokenModalState = useTokenExpiredModal((state) => state.changeTokenModlaState);
 
   // privateInstance 요청 인터셉터(헤더에 토큰 전달)
   privateInstance.interceptors.request.use(
@@ -42,7 +42,7 @@ const useAxiosInterceptor = () => {
     } catch (error) {
       // alert("토큰이 만료되었습니다. 다시 로그인해주세요.");
       localStorage.clear();
-      setIsTokenExpireModalOpen(true);
+      changeTokenModalState();
       // window.location.assign("/login");
       return console.error(error);
     }
